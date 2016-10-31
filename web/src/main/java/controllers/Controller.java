@@ -18,7 +18,7 @@ import java.sql.SQLException;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet("/Controller")
+//@WebServlet("/Controller")
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -46,8 +46,8 @@ public class Controller extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         request.setCharacterEncoding("UTF-8");
-        String page = null;
-        //define came from jsp command and call processing method
+        String page;
+        //define command from jsp and call method for their processing
         ActionFactory client = new ActionFactory();
         ActionCommand command = client.defineCommand(request);
         page = command.execute(request, response);

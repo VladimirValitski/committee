@@ -11,25 +11,22 @@ import javax.servlet.http.HttpServletRequest;
  * Class LanguageBundle determines locales
  */
 public class LanguageBundle {
-    public static String resBundle;
-
     /**
      * Method addLanguage() add language
      */
     public static void addLanguage(String fileURL, HttpServletRequest request) {
         Properties properties = new Properties();
-        InputStream in = LanguageBundle.class.getClassLoader().getResourceAsStream("properties/" + fileURL);
-        resBundle = "properties/" + Locale.getDefault().getLanguage().toUpperCase();
+        InputStream in = LanguageBundle.class.getClassLoader().getResourceAsStream(fileURL);
+        String resBundle = Locale.getDefault().getLanguage().toUpperCase();
         try {
-            InputStreamReader reader = new InputStreamReader(in, "UTF-8");
-            properties.load(reader);
-            reader.close();
+            properties.load(in);
             in.close();
         } catch (IOException e) {
+            System.out.print("Language not found");
         }
-        for (String key : properties.stringPropertyNames()) {
-            String value = properties.getProperty(key);
-            request.getSession().setAttribute(key, value);
+        for (Object key : properties.keySet()) {
+            String value = properties.getProperty((String) key);
+            request.getSession().setAttribute((String) key, value);
         }
     }
 }
